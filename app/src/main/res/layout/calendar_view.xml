@@ -14,90 +14,79 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/left_arrow"
-            />
+            android:src="@drawable/left_arrow" />
 
         <ImageView
             android:id="@+id/btnNext"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:src="@drawable/right_arrow"
-            />
+            android:src="@drawable/right_arrow" />
 
         <TextView
             android:id="@+id/txtDate"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Jun 2017"
             android:layout_toLeftOf="@id/btnNext"
             android:layout_toRightOf="@id/btnPrev"
-            />
+            android:gravity="center"
+            android:text="Jun 2017" />
     </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/calendar_week_header"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="星期日"
             android:gravity="center_horizontal"
-            />
+            android:text="星期日" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="星期一"
             android:gravity="center_horizontal"
-            />
+            android:text="星期一" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="星期二"
             android:gravity="center_horizontal"
-            />
+            android:text="星期二" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="星期三"
             android:gravity="center_horizontal"
-            />
+            android:text="星期三" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="星期四"
             android:gravity="center_horizontal"
-            />
+            android:text="星期四" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="星期五"
             android:gravity="center_horizontal"
-            />
+            android:text="星期五" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="星期六"
             android:gravity="center_horizontal"
-            />
+            android:text="星期六" />
 
     </LinearLayout>
 
@@ -105,8 +94,7 @@
         android:id="@+id/calendar_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:numColumns="7"
-        >
+        android:numColumns="7">
 
     </GridView>
 </LinearLayout>
