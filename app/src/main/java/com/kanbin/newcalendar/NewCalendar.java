@@ -1,6 +1,7 @@
 package com.kanbin.newcalendar;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -119,6 +120,27 @@ public class NewCalendar extends LinearLayout {
 
             int day = date.getDate();
             ((TextView) convertView).setText(String.valueOf(day));
+
+            // 非当月日期置灰
+            Date now = new Date();
+            boolean isTheSameMonth = false;
+            if (date.getMonth() == now.getMonth()){
+                isTheSameMonth = true;
+            }
+            if (isTheSameMonth){ // 有效的月份，否则不是当月日期
+                ((TextView) convertView).setTextColor(Color.parseColor("#000000"));
+
+            }else {
+                ((TextView) convertView).setTextColor(Color.parseColor("#666666"));
+
+            }
+
+            // 如果是当天
+            if (now.getDate() == date.getDate() && now.getMonth() == date.getMonth()
+                    && now.getYear() == date.getYear()){
+                ((TextView) convertView).setTextColor(Color.parseColor("#ff0000"));
+                ((CalendarDayTextview) convertView).isToday = true;
+            }
 
             return convertView;
         }
