@@ -69,7 +69,7 @@ public class NewCalendar extends LinearLayout {
             @Override
             public void onClick(View v) {
                 curDate.add(Calendar.MONTH, -1);
-                renderCalendar();   // 渲染
+                renderCalendar();   // 渲染 日历绘制
             }
         });
 
@@ -89,14 +89,14 @@ public class NewCalendar extends LinearLayout {
         ArrayList<Date> cells = new ArrayList<>();
         Calendar calendar = (Calendar) curDate.clone();
 
-        calendar.set(Calendar.DAY_OF_MONTH, 1);
-        int prevDays = calendar.get(Calendar.DAY_OF_WEEK) - 1;
-        calendar.add(Calendar.DAY_OF_MONTH, -prevDays);
+        calendar.set(Calendar.DAY_OF_MONTH, 1); // calendar置于1号
+        int prevDays = calendar.get(Calendar.DAY_OF_WEEK) - 1;  // 这个月之前有几天
+        calendar.add(Calendar.DAY_OF_MONTH, -prevDays); // calendar往前进
 
         int maxCellCount = 6 * 7;
         while (cells.size() < maxCellCount){
             cells.add(calendar.getTime());
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            calendar.add(Calendar.DAY_OF_MONTH, 1); // 每添加一天，往后挪1天
         }
         gridView.setAdapter(new CalendarAdapter(getContext(), cells));
     }
