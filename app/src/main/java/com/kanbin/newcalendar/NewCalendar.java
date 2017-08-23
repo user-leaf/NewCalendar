@@ -155,9 +155,9 @@ public class NewCalendar extends LinearLayout {
             ((TextView) convertView).setText(String.valueOf(day));
 
             // 非当月日期置灰
-            Date now = new Date();
+            Calendar calendar = (Calendar) curDate.clone();
             boolean isTheSameMonth = false;
-            if (date.getMonth() == now.getMonth()) {
+            if (date.getMonth() == calendar.getTime().getMonth()) {
                 isTheSameMonth = true;
             }
             if (isTheSameMonth) { // 有效的月份，否则不是当月日期
@@ -169,6 +169,7 @@ public class NewCalendar extends LinearLayout {
             }
 
             // 如果是当天
+            Date now = new Date();
             if (now.getDate() == date.getDate() && now.getMonth() == date.getMonth()
                     && now.getYear() == date.getYear()) {
                 ((TextView) convertView).setTextColor(Color.parseColor("#ff0000"));
