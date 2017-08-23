@@ -1,6 +1,7 @@
 package com.kanbin.newcalendar;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -32,8 +34,13 @@ public class NewCalendar extends LinearLayout {
     private GridView gridView;
 
     private Calendar curDate = Calendar.getInstance();
+    private String displayFormat;
+
+    public NewCalendarListener listener;
+
     /**
      * 构造方法：初始化时的入口
+     *
      * @param context
      */
     public NewCalendar(Context context) {
@@ -42,17 +49,29 @@ public class NewCalendar extends LinearLayout {
 
     public NewCalendar(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initControl(context);
+        initControl(context, attrs);
     }
 
     public NewCalendar(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initControl(context);
+        initControl(context, attrs);
     }
 
-    private void initControl(Context context){
+    private void initControl(Context context, AttributeSet attrs) {
         bindControl(context);
         bindControlEvent();
+
+        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.NewCalendar);
+        try {
+            String format = typedArray.getString(R.styleable.NewCalendar_dateFormat);
+            displayFormat = format;
+            if (displayFormat == null){
+                displayFormat = "MMM yyyy";
+            }
+        } finally {
+            typedArray.recycle();
+        }
+
         renderCalendar();
     }
 
@@ -84,7 +103,7 @@ public class NewCalendar extends LinearLayout {
     }
 
     private void renderCalendar() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(displayFormat);
         txtDate.setText(simpleDateFormat.format(curDate.getTime()));
 
         ArrayList<Date> cells = new ArrayList<>();
@@ -95,14 +114,28 @@ public class NewCalendar extends LinearLayout {
         calendar.add(Calendar.DAY_OF_MONTH, -prevDays); // calendar往前进
 
         int maxCellCount = 6 * 7;
-        while (cells.size() < maxCellCount){
+        while (cells.size() < maxCellCount) {
             cells.add(calendar.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, 1); // 每添加一天，往后挪1天
         }
         gridView.setAdapter(new CalendarAdapter(getContext(), cells));
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (listener == null) {
+                    return false;
+                }else {
+                    listener.onItemLongPress((Date) parent.getItemAtPosition(position));
+                    return true;
+                }
+            }
+
+        });
+
     }
 
-    private class CalendarAdapter extends ArrayAdapter<Date>{
+    private class CalendarAdapter extends ArrayAdapter<Date> {
         LayoutInflater inflater;
 
         public CalendarAdapter(@NonNull Context context, ArrayList<Date> days) {
@@ -114,7 +147,7 @@ public class NewCalendar extends LinearLayout {
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             Date date = getItem(position);
-            if (convertView == null){
+            if (convertView == null) {
                 convertView = inflater.inflate(R.layout.calendar_text_day, parent, false);
             }
 
@@ -124,25 +157,29 @@ public class NewCalendar extends LinearLayout {
             // 非当月日期置灰
             Date now = new Date();
             boolean isTheSameMonth = false;
-            if (date.getMonth() == now.getMonth()){
+            if (date.getMonth() == now.getMonth()) {
                 isTheSameMonth = true;
             }
-            if (isTheSameMonth){ // 有效的月份，否则不是当月日期
+            if (isTheSameMonth) { // 有效的月份，否则不是当月日期
                 ((TextView) convertView).setTextColor(Color.parseColor("#000000"));
 
-            }else {
+            } else {
                 ((TextView) convertView).setTextColor(Color.parseColor("#666666"));
 
             }
 
             // 如果是当天
             if (now.getDate() == date.getDate() && now.getMonth() == date.getMonth()
-                    && now.getYear() == date.getYear()){
+                    && now.getYear() == date.getYear()) {
                 ((TextView) convertView).setTextColor(Color.parseColor("#ff0000"));
                 ((CalendarDayTextview) convertView).isToday = true;
             }
 
             return convertView;
         }
+    }
+
+    public interface NewCalendarListener{
+        void onItemLongPress(Date day);
     }
 }
