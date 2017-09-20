@@ -1,4 +1,4 @@
-package com.kanbin.newcalendar;
+package com.sesame.newcalendar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -77,6 +77,11 @@ public class NewCalendar extends LinearLayout {
 
     private void bindControl(Context context) {
         LayoutInflater inflater = LayoutInflater.from(context);
+        /**
+         * 布局是从这里加入的，本控件是继承的LinearLayout，本身就是个ViewGroup
+         * http://blog.csdn.net/allbule/article/details/52880889
+         * http://blog.csdn.net/u012702547/article/details/52628453
+         */
         inflater.inflate(R.layout.calendar_view, this);
         btnPrev = (ImageView) findViewById(R.id.btnPrev);
         btnNext = (ImageView) findViewById(R.id.btnNext);

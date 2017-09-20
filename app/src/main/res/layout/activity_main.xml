@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    tools:context="com.kanbin.newcalendar.MainActivity">
+    tools:context="com.sesame.newcalendar.MainActivity">
 
-    <com.kanbin.newcalendar.NewCalendar
-        xmlns:NewCalendarNS="http://schemas.android.com/apk/res/com.kanbin.newcalendar"
+    <com.sesame.newcalendar.NewCalendar
+        xmlns:NewCalendarNS="http://schemas.android.com/apk/res/com.sesame.newcalendar"
         android:id="@+id/newCalendar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        NewCalendarNS:dateFormat="MMMM yyyy"></com.kanbin.newcalendar.NewCalendar>
+        NewCalendarNS:dateFormat="MMMM yyyy"></com.sesame.newcalendar.NewCalendar>
 
 </FrameLayout>
